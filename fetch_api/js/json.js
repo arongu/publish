@@ -6,7 +6,7 @@ export { httpHandler, jsonHandler };
 
 const httpHandler = (response) => {
     if ( !response.ok ) {
-        throw new Error('Could not fetch data!');
+        throw new Error('Could not fetch model!');
     }
 
     return response;
