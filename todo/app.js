@@ -151,6 +151,14 @@ const listen__Tasks_Button_ClearTasks__click = () => {
    });
 }
 
+const listen__Tasks_Button_ClearAllTasks__click = () => {
+   const btnClearTasks = document.querySelector('.clear-all-tasks');
+   btnClearTasks.addEventListener('click', () => {
+      dom__clear_tasks();
+      deleteAllTasksFromStorage();
+   });
+}
+
 const getIndexOfListElement = (listElement) => {
    if ( listElement !== null ) {
       let index = 0;
@@ -208,6 +216,7 @@ listen__TaskList_Button_AddTask__click();
 
 listen__Tasks_Input_FilterTasks__input();
 listen__Tasks_Button_ClearTasks__click();
+listen__Tasks_Button_ClearAllTasks__click();
 listen__Tasks_x__click();
 
 // init
