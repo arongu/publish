@@ -91,6 +91,18 @@ const dom__clear_tasks = () => {
    }
 }
 
+const dom__storage__clear_filtered_tasks = () => {
+   const collectionItems = document.querySelectorAll('.collection-item');
+
+   collectionItems.forEach((listElement) => {
+      if (listElement.style.display === 'block') {
+         const index = getIndexOfListElement(listElement);
+         listElement.remove();
+         deleteTaskFromStorage(index);
+      }
+   });
+}
+
 const dom__filter_tasks = (text) => {
    const collectionItems = document.querySelectorAll('.collection-item');
 
@@ -107,7 +119,7 @@ const dom__filter_tasks = (text) => {
 // --------------------------------------------------------------------------------
 // Event listeners
 // --------------------------------------------------------------------------------
-const add_listener__key_enter__FormInputTasks = () => {
+const listen__TaskList_Input_NewTask__key__enter = () => {
    const input = document.querySelector('#task');
    input.addEventListener('keyup', (event) => {
       if ( event.key === 'Enter' ) {
@@ -117,14 +129,14 @@ const add_listener__key_enter__FormInputTasks = () => {
    });
 }
 
-const add_listener__input__FormFilterTasks = () => {
+const listen__Tasks_Input_FilterTasks__input = () => {
    const input = document.querySelector('#task-filter');
    input.addEventListener('input', () => {
       dom__filter_tasks(input.value);
    });
 }
 
-const add_listener__click__ButtonAddTask = () => {
+const listen__TaskList_Button_AddTask__click = () => {
    const btnAddTask = document.querySelector('#input-add-task');
    btnAddTask.addEventListener('click', () => {
       const task = dom__task_from_input_to_ul_collection();
@@ -132,15 +144,30 @@ const add_listener__click__ButtonAddTask = () => {
    });
 }
 
-const add_listener__click__ButtonClearTasks = () => {
+const listen__Tasks_Button_ClearTasks__click = () => {
    const btnClearTasks = document.querySelector('.clear-tasks');
    btnClearTasks.addEventListener('click', () => {
-      dom__clear_tasks();
-      deleteAllTasksFromStorage();
+      dom__storage__clear_filtered_tasks();
    });
 }
 
-const add_listener__click__toDeleteAnyTask = () => {
+const getIndexOfListElement = (listElement) => {
+   if ( listElement !== null ) {
+      let index = 0;
+      let sibling = listElement;
+
+      while (sibling.previousElementSibling !== null) {
+         sibling = sibling.previousElementSibling;
+         index++;
+      }
+
+      return index;
+   }
+
+   throw 'error: listElement is null';
+}
+
+const listen__Tasks_x__click = () => {
    const collectionList = document.querySelector('ul.collection');
    collectionList.addEventListener('click', (event) => {
       const classList = event.target.classList;
@@ -153,17 +180,10 @@ const add_listener__click__toDeleteAnyTask = () => {
          listElement = event.target.parentElement;
       }
 
-      if ( listElement !== null ) {
-         let index = 0;
-         let sibling = listElement;
-
-         while ( sibling.previousElementSibling !== null ) {
-            sibling = sibling.previousElementSibling;
-            index++;
-         }
-
-         deleteTaskFromStorage(index);
+      if ( listElement !== null) {
+         const index = getIndexOfListElement(listElement);
          listElement.remove();
+         deleteTaskFromStorage(index);
       }
    });
 }
@@ -171,7 +191,7 @@ const add_listener__click__toDeleteAnyTask = () => {
 // --------------------------------------------------------------------------------
 // Restore
 // --------------------------------------------------------------------------------
-const restore_tasks_from_session_storage = () => {
+const load_tasks_from_local_storage = () => {
    const tasks = getTasksFromStorage();
    if ( tasks !== null ) {
       tasks.forEach((task) => {
@@ -183,9 +203,12 @@ const restore_tasks_from_session_storage = () => {
 // --------------------------------------------------------------------------------
 // Business logic
 // --------------------------------------------------------------------------------
-restore_tasks_from_session_storage();
-add_listener__key_enter__FormInputTasks();
-add_listener__input__FormFilterTasks();
-add_listener__click__ButtonAddTask();
-add_listener__click__ButtonClearTasks();
-add_listener__click__toDeleteAnyTask();
+listen__TaskList_Input_NewTask__key__enter();
+listen__TaskList_Button_AddTask__click();
+
+listen__Tasks_Input_FilterTasks__input();
+listen__Tasks_Button_ClearTasks__click();
+listen__Tasks_x__click();
+
+// init
+load_tasks_from_local_storage();
