@@ -7,18 +7,18 @@ export { TaskListFilterManager }
 class TaskListManager {
     static addTask(task) {
         const icon = document.createElement('i');
-        icon.setAttribute('class', 'fa fa-remove');
-
         const link = document.createElement('a');
+        const li   = document.createElement('li');
+        const ul   = document.querySelector('ul.collection');
+
+        icon.setAttribute('class', 'fa fa-remove');
+        // link
         link.className = 'delete-item secondary-content';
         link.setAttribute('href', '#');
-
-        const li = document.createElement('li');
+        // list element
         li.setAttribute('class', 'collection-item');
         li.textContent = task;
-
         // assemble the list element and add it to the ul
-        const ul = document.querySelector('ul.collection');
         link.appendChild(icon);
         li.appendChild(link);
         ul.appendChild(li);

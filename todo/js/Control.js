@@ -103,5 +103,5 @@ const listen__TaskFilter_Input__key__enter = () => {
         if ( event.key === 'Enter' ) {
             TaskListFilterManager.clearFilters();
         }
-    })
+    });
 }
