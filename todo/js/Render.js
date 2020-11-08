@@ -84,4 +84,12 @@ class TaskListFilterManager {
             }
         });
     }
+
+    static clearFilters() {
+        const emptyString = '';
+        const input = document.querySelector('#task-filter');
+
+        input.value = emptyString;
+        TaskListFilterManager.filterTasks(emptyString);
+    }
 }

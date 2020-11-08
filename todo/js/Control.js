@@ -11,7 +11,8 @@ export {
     listen__TaskList_Button_ClearAllTasks__click,
     listen__TaskList_x__click,
     listen__TaskList_Input_NewTask__key__enter,
-    listen__TaskFilter_Input__input
+    listen__TaskFilter_Input__input,
+    listen__TaskFilter_Input__key__enter
 }
 
 // --------------------------------------------------------------------------------
@@ -39,7 +40,6 @@ const listen__TaskList_Button_AddTask__click = () => {
             TaskListManager.addTask(task);
             LocalStorageManager.addTask(task);
         }
-
     });
 }
 
@@ -95,4 +95,13 @@ const listen__TaskFilter_Input__input = () => {
     input.addEventListener('input', () => {
         TaskListFilterManager.filterTasks(input.value);
     });
+}
+
+const listen__TaskFilter_Input__key__enter = () => {
+    const input = document.querySelector('#task-filter');
+    input.addEventListener('keyup', (event) => {
+        if ( event.key === 'Enter' ) {
+            TaskListFilterManager.clearFilters();
+        }
+    })
 }
