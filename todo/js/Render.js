@@ -39,7 +39,7 @@ class TaskListManager {
     static removeAllTasks() {
         const list = document.querySelector('ul.collection');
 
-        if ( list !== null ) {
+        if ( list !== null) {
             while ( list.childElementCount !== 0 ) {
                 list.removeChild(list.firstElementChild);
             }
@@ -52,18 +52,16 @@ class TaskListManager {
 
         collectionItems.forEach((listElement) => {
             if ( listElement.style.display === 'block') {
-                if ( listElement !== null) {
-                    let index = 0;
-                    let sibling = listElement;
+                let index = 0;
+                let sibling = listElement;
 
-                    while (sibling.previousElementSibling !== null) {
-                        sibling = sibling.previousElementSibling;
-                        index++;
-                    }
-
-                    listElement.remove();
-                    LocalStorageManager.deleteTaskByIndex(index);
+                while (sibling.previousElementSibling !== null) {
+                    sibling = sibling.previousElementSibling;
+                    index++;
                 }
+
+                listElement.remove();
+                LocalStorageManager.deleteTaskByIndex(index);
             }
         });
 
