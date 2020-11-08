@@ -22,7 +22,6 @@ class LocalStorageManager {
         }
 
         savedTasks.push(task);
-        LocalStorageManager.backupTasks();
         localStorage.setItem('tasks', JSON.stringify(savedTasks));
     }
 
@@ -35,7 +34,6 @@ class LocalStorageManager {
         const savedTasks = LocalStorageManager.getTasks();
         if ( savedTasks !== null && savedTasks[index] !== null) {
             savedTasks.splice(index, 1);
-            LocalStorageManager.backupTasks();
             localStorage.setItem('tasks', JSON.stringify(savedTasks));
         }
     }
@@ -49,6 +47,6 @@ class LocalStorageManager {
     }
 
     static restoreTasksFromBackup() {
-        localStorage.setItem('tasks', localStorage.getItem('tasks'));
+        localStorage.setItem('tasks', localStorage.getItem('tasks-backup'));
     }
 }

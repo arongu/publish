@@ -12,7 +12,8 @@ export {
     listen__TaskList_x__click,
     listen__TaskList_Input_NewTask__key__enter,
     listen__TaskFilter_Input__input,
-    listen__TaskFilter_Input__key__enter
+    listen__TaskFilter_Input__key__enter,
+    listen__Button_Undo__click
 }
 
 // --------------------------------------------------------------------------------
@@ -24,8 +25,9 @@ const listen__TaskList_Input_NewTask__key__enter = () => {
         if ( event.key === 'Enter' ) {
             const task = TaskListManager.getInputAndClear();
             if ( task !== null) {
-                TaskListManager.addTask(task);
+                LocalStorageManager.backupTasks();
                 LocalStorageManager.addTask(task);
+                TaskListManager.addTask(task);
             }
         }
     });
@@ -36,8 +38,9 @@ const listen__TaskList_Button_AddTask__click = () => {
     btnAddTask.addEventListener('click', () => {
         const task = TaskListManager.getInputAndClear();
         if ( task !== null) {
-            TaskListManager.addTask(task);
+            LocalStorageManager.backupTasks();
             LocalStorageManager.addTask(task);
+            TaskListManager.addTask(task);
         }
     });
 }
@@ -45,8 +48,8 @@ const listen__TaskList_Button_AddTask__click = () => {
 const listen__TaskList_Button_ClearTasks__click = () => {
     const btnClearTasks = document.querySelector('.clear-tasks');
     btnClearTasks.addEventListener('click', () => {
-        const indices = TaskListManager.removeFilteredTasks();
-        for ( let index of indices) {
+        LocalStorageManager.backupTasks();
+        for ( let index of TaskListManager.removeFilteredTasks()) {
             LocalStorageManager.deleteTaskByIndex(index);
         }
     });
@@ -56,6 +59,7 @@ const listen__TaskList_Button_ClearAllTasks__click = () => {
     const btnClearTasks = document.querySelector('.clear-all-tasks');
     btnClearTasks.addEventListener('click', () => {
         TaskListManager.removeAllTasks();
+        LocalStorageManager.backupTasks();
         LocalStorageManager.deleteAllTasks();
     });
 }
@@ -83,7 +87,23 @@ const listen__TaskList_x__click = () => {
             }
 
             listElement.remove();
+            LocalStorageManager.backupTasks();
             LocalStorageManager.deleteTaskByIndex(index);
+        }
+    });
+}
+
+const listen__Button_Undo__click = () => {
+    const btnUndo = document.querySelector('#button-undo');
+    btnUndo.addEventListener('click', () => {
+        TaskListManager.removeAllTasks();
+        LocalStorageManager.restoreTasksFromBackup();
+
+        const tasks = LocalStorageManager.getTasks();
+        if ( tasks !== null ) {
+            tasks.forEach((task) => {
+                TaskListManager.addTask(task);
+            });
         }
     });
 }
