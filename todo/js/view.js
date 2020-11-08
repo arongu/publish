@@ -1,8 +1,9 @@
-import { LocalStorageManager } from "./LocalStorage.js";
-// export
-export { TaskListManager }
-export { TaskListFilterManager }
+import { LocalStorageManager } from "./lib/local_storage.js";
 
+export {
+    TaskListManager,
+    TaskListFilterManager
+}
 
 class TaskListManager {
     static addTask(task) {
@@ -11,6 +12,7 @@ class TaskListManager {
         const li   = document.createElement('li');
         const ul   = document.querySelector('ul.collection');
 
+        // icon
         icon.setAttribute('class', 'fa fa-remove');
         // link
         link.className = 'delete-item secondary-content';

@@ -1,9 +1,9 @@
 import {
     TaskListFilterManager,
     TaskListManager
-} from "./Render.js";
+} from "./view.js";
 
-import {LocalStorageManager} from "./LocalStorage.js";
+import { LocalStorageManager } from "./lib/local_storage.js";
 
 export {
     listen__TaskList_Button_AddTask__click,
@@ -16,9 +16,8 @@ export {
 }
 
 // --------------------------------------------------------------------------------
-// Event listeners
-// --------------------------------------------------------------------------------
 // TaskList related
+// --------------------------------------------------------------------------------
 const listen__TaskList_Input_NewTask__key__enter = () => {
     const input = document.querySelector('#task');
     input.addEventListener('keyup', (event) => {
@@ -89,7 +88,10 @@ const listen__TaskList_x__click = () => {
     });
 }
 
+
+// --------------------------------------------------------------------------------
 // TaskFilter related
+// --------------------------------------------------------------------------------
 const listen__TaskFilter_Input__input = () => {
     const input = document.querySelector('#task-filter');
     input.addEventListener('input', () => {
