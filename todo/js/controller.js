@@ -96,6 +96,7 @@ const listen__TaskList_x__click = () => {
 const listen__Button_Undo__click = () => {
     const btnUndo = document.querySelector('#button-undo');
     btnUndo.addEventListener('click', () => {
+        TaskListFilterManager.clearFilters();
         TaskListManager.removeAllTasks();
         LocalStorageManager.restoreTasksFromBackup();
 
