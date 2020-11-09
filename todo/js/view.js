@@ -12,16 +12,14 @@ class TaskListManager {
         const li   = document.createElement('li');
         const ul   = document.querySelector('ul.collection');
 
-        // icon
         icon.setAttribute('class', 'fa fa-remove');
-        // link
+
         link.className = 'delete-item secondary-content';
-        // #? makes not jump to the top of the documentation when it is clicked
-        link.setAttribute('href', '#?');
-        link.prevent
-        // list element
+        link.setAttribute('href', '#?'); // value '#?' prevents jumping to the top of the documentation when it is clicked
+
         li.setAttribute('class', 'collection-item');
         li.textContent = task;
+
         // assemble the list element and add it to the ul
         link.appendChild(icon);
         li.appendChild(link);
