@@ -78,15 +78,21 @@ const listen__TaskList_x__click = () => {
         }
 
         if ( listElement !== null) {
-            let index = 0;
-            let sibling = listElement;
+            let index    = 0;
+            let ptr      = listElement;
 
-            while (sibling.previousElementSibling !== null) {
-                sibling = sibling.previousElementSibling;
+            while (ptr.previousElementSibling !== null) {
+                ptr = ptr.previousElementSibling;
                 index++;
             }
 
             listElement.remove();
+            // trick only scroll to the deleted element's location,
+            // when the 'click event -- delete' is outside of the visible range of the user
+            if ( event.clientY > window.innerHeight) {
+                window.scrollTo(0, event.clientY);
+            }
+
             LocalStorageManager.backupTasks();
             LocalStorageManager.deleteTaskByIndex(index);
         }

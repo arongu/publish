@@ -16,7 +16,9 @@ class TaskListManager {
         icon.setAttribute('class', 'fa fa-remove');
         // link
         link.className = 'delete-item secondary-content';
-        link.setAttribute('href', '#');
+        // #? makes not jump to the top of the documentation when it is clicked
+        link.setAttribute('href', '#?');
+        link.prevent
         // list element
         li.setAttribute('class', 'collection-item');
         li.textContent = task;
