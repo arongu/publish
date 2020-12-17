@@ -15,9 +15,11 @@ const buttonEquals    = document.getElementById('calc-equals');
 const buttonSeven   = document.getElementById('calc-seven');
 const buttonEight   = document.getElementById('calc-eight');
 const buttonNine    = document.getElementById('calc-nine');
+
 const buttonFour    = document.getElementById('calc-four');
 const buttonFive    = document.getElementById('calc-five');
 const buttonSix     = document.getElementById('calc-six');
+
 const buttonOne     = document.getElementById('calc-one');
 const buttonTwo     = document.getElementById('calc-two');
 const buttonThree   = document.getElementById('calc-three');
