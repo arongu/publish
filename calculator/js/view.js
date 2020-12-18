@@ -1,3 +1,33 @@
+export {
+    display,
+    // command buttons
+    buttonClear,
+    buttonBackSpace,
+
+    // operator buttons
+    buttonModulo,
+    buttonDivide,
+    buttonMultiply,
+    buttonSubtract,
+    buttonAdd,
+    buttonEquals,
+
+    // number buttons
+    buttonSeven,
+    buttonEight,
+    buttonNine,
+    buttonFour,
+    buttonFive,
+    buttonSix,
+    buttonOne,
+    buttonTwo,
+    buttonThree,
+    buttonZero,
+
+    // decimal
+    buttonDecimal
+}
+
 // display
 const display         = document.getElementById('calc-display-val')
 
