@@ -7,25 +7,57 @@ export { listenKeyStrokes }
     .         -- decimal
     0..9      -- numbers
 */
-const append = (value) => {
-    if ( Number.isInteger(value) ) {
-        if ( display.textContent === '0') {
-            if ( value !== 0 ) {
-                display.textContent = value;
-            }
+let stored_value  = 0;
+let number_string = '0';
+let operator      = null;
 
-        } else {
-            display.textContent += value;
-        }
+const storeValue = () => {
+    stored_value = Number(number_string);
+}
 
-    } else if ( value === '.' && !display.textContent.includes('.')) {
-        display.textContent += '.';
+const storeOperator = (op) => {
+    operator = op;
+}
+
+const clearOperator = () => {
+    operator = null;
+}
+
+const appendToDisplay = (value) => {
+    if ( operator !== null ) {
+        storeValue();
+        number_string = '0';
     }
 
-    console.log(display.textContent);
+    if ( value === '0' ) {
+        if ( number_string === '0') return;
+    }
+
+    if ( value === '.' && !number_string.includes('.')) {
+        number_string += '.';
+        return;
+    }
+
+    if ( value in [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' ]) {
+        if ( number_string !== '0' ) {
+            number_string += value;
+            display.textContent = number_string;
+        } else {
+            number_string = value.toString();
+            display.textContent = number_string;
+        }
+
+        if ( operator !== null ) {
+            clearOperator();
+        }
+    }
+
+    console.log('number_string:', number_string);
+    console.log('textContent:', display.textContent);
 }
 
 const reset = () => {
+    stored_value = 0;
     display.textContent = '0';
 }
 
@@ -42,94 +74,84 @@ const listenKeyStrokes = () => {
         switch ( event.key ) {
             // numbers
             case ( '0' ) : {
-                console.log('zero');
-                append(0);
+                appendToDisplay('0');
                 break;
             }
 
             case ( '1' ) : {
-                console.log('one');
-                append(1);
+                appendToDisplay('1');
                 break;
             }
 
             case ( '2' ) : {
-                console.log('two');
-                append(2);
+                appendToDisplay('2');
                 break;
             }
 
             case ( '3' ) : {
-                console.log('three');
-                append(3);
+                appendToDisplay('3');
                 break;
             }
 
             case ( '4' ) : {
-                console.log('four');
-                append(4);
+                appendToDisplay('4');
                 break;
             }
 
             case ( '5' ) : {
-                console.log('five');
-                append(5);
+                appendToDisplay('5');
                 break;
             }
 
             case ( '6' ) : {
-                console.log('six');
-                append(6);
+                appendToDisplay('6');
                 break;
             }
 
             case ( '7') : {
-                console.log('seven');
-                append(7);
+                appendToDisplay('7');
                 break;
             }
 
             case ( '8' ) : {
-                console.log('eight');
-                append(8);
+                appendToDisplay('8');
                 break;
             }
 
             case ( '9' ) : {
-                console.log('nine');
-                append(9);
+                appendToDisplay('9');
                 break;
             }
 
             case ( '.' ) : case ( ',' ) : {
-                console.log('. , ');
-                append('.');
+                appendToDisplay('.');
                 break;
             }
 
             // operators
             case ( '+' ) : {
-                console.log('+');
+                storeValue();
+                storeOperator('+');
                 break;
             }
 
             case ( '-' ) : {
-                console.log('-');
+                storeOperator('-');
                 break;
             }
 
             case ( '*' ) : {
-                console.log('*');
+                storeOperator('*');
                 break;
             }
 
             case ( '/' ) : {
-                console.log('/');
+                storeOperator('/');
                 break;
             }
 
             case ( '%' ) : {
-                console.log('%');
+                storeOperator('%');
                 break;
             }
 
@@ -145,8 +167,8 @@ const listenKeyStrokes = () => {
                 break;
             }
 
-            // enter, return
-            case ( 'Enter' ) : {
+            // enter, return add = here too
+            case ( 'Enter' ) : case ( '=' ) : {
                 console.log('enter');
                 break;
             }
